@@ -9,10 +9,14 @@ class FilterMapExercise:
         списка применяется функция, которая в ответ возвращает кортеж
         (булево значение, результат работы функции).
         Если первый элемент кортежа истина, то результат добавляется в список.
-
         Принимает в качестве аргументов функцию и итерируемый источник, а возвращает список.
         :param func: Функция, применяемая к каждому элементу списка.
         :param input_array: Исходный список.
         :return: Отфильтрованный список.
         """
-        pass
+        filter_list = []
+        for each_element in input_array:
+            check, result = func(each_element)
+            if check:
+                filter_list.append(result)
+        return filter_list
