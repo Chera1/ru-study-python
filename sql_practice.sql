@@ -1,3 +1,23 @@
+CREATE TABLE IF NOT EXISTS regions    (
+    id uuid PRIMARY KEY,
+    name VARCHAR
+);
+
+CREATE TABLE IF NOT EXISTS locations    (
+    id uuid PRIMARY KEY,
+    address VARCHAR,
+    region_id uuid NOT NULL,
+    FOREIGN KEY(region_id) REFERENCES regions(id)
+);
+
+CREATE TABLE IF NOT EXISTS departments   (
+    id uuid PRIMARY KEY,
+    name VARCHAR,
+    location_id uuid NOT NULL,
+    manager_id uuid NOT NULL,
+    FOREIGN KEY(location_id) REFERENCES locations (id)
+);
+
 CREATE TABLE IF NOT EXISTS employees  (
     id uuid PRIMARY KEY,
     name VARCHAR,
@@ -6,26 +26,12 @@ CREATE TABLE IF NOT EXISTS employees  (
     email VARCHAR,
     salary INTEGER,
     manager_id uuid NOT NULL,
-    department_id uuid NOT NULL
+    department_id uuid NOT NULL,
+    FOREIGN KEY(department_id) REFERENCES departments (id),
+    FOREIGN KEY(manager_id) REFERENCES employees (id)
 );
 
-CREATE TABLE IF NOT EXISTS departments   (
-    id uuid PRIMARY KEY,
-    name VARCHAR,
-    location_id uuid NOT NULL,
-    manager_id uuid NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS locations    (
-    id uuid PRIMARY KEY,
-    address VARCHAR,
-    region_id uuid NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS regions    (
-    id uuid PRIMARY KEY,
-    name VARCHAR
-);
+Alter TABLE departments add FOREIGN KEY (manager_id) REFERENCES employees (id);
 
 -- Показать работников у которых нет почты или почта не в корпоративном домене (домен dualbootpartners.com)
 Select * from Employees
