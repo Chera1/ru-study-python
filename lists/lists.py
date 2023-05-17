@@ -8,7 +8,8 @@ class ListExercise:
         :return: Список с замененными элементами
         """
         if input_list:
-            max_element = sorted(input_list)[-1]
+            input_list.sort()
+            max_element = input_list[-1]
             return list(map(lambda x: max_element if x > 0 else x, input_list))
         else:
             return []
